@@ -1,0 +1,1 @@
+<web-view class="h-screen w-screen" src="{{ url }}" />

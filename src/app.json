@@ -1,0 +1,60 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/order/index",
+    "pages/autoList/index",
+    "pages/addAuto/index",
+    "pages/servicePackageList/index",
+    "pages/servicePackageDetail/index",
+    "pages/orderDetail/index",
+    "pages/orderList/index",
+    "pages/payment/index",
+    "pages/settings/index",
+    "pages/privacyPolicy/index",
+    "pages/modifyMobile/index",
+    "pages/result/index",
+    "pages/login/index",
+    "pages/personal/index",
+    "pages/joinGroup/index",
+    "pages/agreement/index",
+    "pages/webview/index",
+    "pages/information/index"
+  ],
+  "subpackages":[{
+    "root": "servicePackage/",
+    "pages": [
+      "pages/index/index",
+      "pages/serviceDetail/index",
+      "pages/carImage/index",
+      "pages/personalCenter/index",
+      "pages/personal/index",
+      "pages/historyOrder/index",
+      "pages/groupOrders/index"
+    ]
+  }],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#f5f5f5",
+    "navigationBarTitleText": "启明汽车服务",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5f5f5"
+  },
+  "plugins": {
+    "chooseLocation": {
+      "version": "1.0.9",
+      "provider": "wx76a9a06e5b4e693e"
+    }, 
+    "chooseAutoInfo": {
+      "version": "1.0.1",
+      "provider": "wx6feefeab1ca6452c"
+    }
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "需要获取您的定位以便服务人员前往车辆位置"
+    }
+  },
+  "lazyCodeLoading": "requiredComponents",
+  "requiredPrivateInfos": ["getLocation"],
+  "sitemapLocation": "sitemap.json"
+}

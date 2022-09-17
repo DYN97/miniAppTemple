@@ -1,0 +1,96 @@
+<!-- index.wxml -->
+<view class="h-screen bg-gray-bg">
+<swiper autoplay="{{autoplay}}" interval="{{interval}}" circular duration="{{duration}}" style="height:400rpx">
+  <block wx:for="{{banners}}" wx:key="*this"  >
+    <swiper-item class="bg-gray-50" bindtap="toBanner" data-url="{{ item.url }}">
+      <image src="{{ item.img }}" mode="aspectFill" class="w-full h-full" />
+    </swiper-item>
+  </block>
+</swiper>
+<view class="relative bg-gradient-to-b from-white/0 via-white/85 to-gray-bg">
+  <view class="bg-white mx-bg relative -top-8 rounded-lg flex flex-row items-center w-main py-2 shadow-common">
+    <view class="flex flex-col flex-shrink-0"  bindtap="toPage" data-target="autoList">
+      <text class="text-big text-gray-font1 flex-shrink-0" >{{ chosedCar.license ? chosedCar.license : '未拥有车辆' }}</text>
+      <image class="block" src="../../static/car.png" style="width:202rpx;height:100rpx"></image>
+    </view>
+    <view class="h-12 border-l border-solid border-gray-border w-0 mx-2 "></view>
+    <view class="px-2 text-red-800">
+      <image src="../../static/desc.png" style="width:128rpx;height:108rpx" />
+    </view>
+    <view class="pl-4 flex-shrink-0" bindtap="toPage" data-target="order">
+      <view class="rounded-full bg-gradient-to-l px-4 py-3 text-white from-red-buttonfrom to-red-buttonto" style="box-shadow: 0px 4px 4px rgba(255,72,72,0.3000);">
+        上门洗车
+      </view>
+    </view>
+  </view>
+ 
+  <view class="mx-bg flex flex-row">
+    <view class="relative w-1/2 mr-1" bindtap="toPage" data-target="orderList">
+      <image class="rounded-lg" src="../../static/my-bg.png" style="width:336rpx;height:156rpx" />
+      <view class="text-white absolute top-4 flex flex-col left-4">
+        <text class="font-bold text-normal">我的订单</text>
+        <text class="text-16 mt-2">My Orders</text>
+      </view>
+    </view>
+    <view class="relative text-white text-center w-1/2 h-20" bindtap="toPage" data-target="personal">
+      <image class="rounded-lg" src="../../static/orders-bg.png" style="width:336rpx;height:156rpx" />
+      <view class="text-white absolute top-4 flex flex-col left-4" >
+        <text class="font-bold text-normal">个人中心</text>
+        <text class="text-16 mt-2">Personal hub</text>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{ !unLogin && waitingOrder }}" class="flex flex-row mx-bg my-4 w-main py-2 px-3 items-center justify-between rounded-full relative" bindtap="toOrderDetail" data-id="{{ waitingOrder.id }}" style="background: linear-gradient(87deg, #FFDBDB 0%, #FFF1D9 47%, #FFD8D8 100%);">
+    <image src="../../static/horn.png" style="width:104rpx;height:111rpx" class="absolute left-0 -top-3" />
+    <view class="pl-9 flex flex-row w-full relative text-normal text-gray-dark">
+      {{ waitingOrder.statusValue }}
+      <view class="ml-3 w-8/12 truncate text-gray-font666">{{ waitingOrder.des ? waitingOrder.des : '' }}</view>
+    </view>
+    <image class="absolute right-4" src="../../static/next.png" style="width:44rpx;height:44rpx" />
+  </view>
+  <view class="mx-bg py-2 text-title font-bold">服务推荐</view>
+</view>
+<view class="bg-gray-bg w-screen pb-5">
+  <view class="px-bg grid grid-cols-2 max-h-safe overflow-auto mb-3">
+    <view wx:for="{{servicePackages}}" wx:key="id" class="flex-1 block my-1 {{ index % 2 === 0 ? 'mr-1' : 'ml-1' }} bg-white rounded-lg" catchtap="toServicePackageDetail" data-id="{{ item.id }}">
+      <view class="w-full rounded-t-lg">
+        <image class="block w-full h-40 rounded-t-lg" src="{{ item.homePagePic }}" />
+      </view>
+      <view class="text-32 px-common mt-common text-gray-dark">{{ item.serviceName }}</view>
+      <view class="mt-1 px-common">
+        <text class="px-common py-0.5 text-red-heavy bg-red-light rounded-lg text-24 bg-opacity-70 mr-1" wx:for="{{ item.serviceFeature }}" wx:for-item="childitem" wx:for-index="childindex" wx:key="childindex">{{childitem}}</text>
+      </view>
+      <view class="mt-1 px-common mb-common">        
+        <view class="flex flex-row items-center">
+          <text class="text-red-500 text-24 mt-1">¥</text>
+          <text class="text-red-500 text-title font-bolder mr-1 align-bottom">{{ item.groupPrice }}</text>
+          <image src="../../static/group-icon-sm.png" style="width:36rpx;height:36rpx" />
+          <view class="text-gray-dark text-24 ml-1 mt-1">¥{{ item.serviceCurrentPrice }}</view>
+        </view>       
+      </view>
+    </view>
+    <view wx:if="{{servicePackages.length % 2 > 0}}" class="flex flex-1 block my-1 ml-1 bg-white justify-center items-center  rounded-lg">      
+      <view>
+        <image src="../../static/empty.png" style="width:200rpx;height:150rpx" />
+        <view class="text-gray-dark text-center">敬请期待</view>
+      </view>
+    </view>
+    <view class="h-10 leading-10 col-span-2 text-center text-gray-light">----没有更多了----</view>
+   
+  </view>
+  <official-account></official-account>
+</view>
+
+</view>
+<view wx:if="{{ unLogin }}" class="fixed z-8 bottom-8 text-normal left-16 right-16 py-2 rounded-2xl items-center justify-center flex flex-row bg-gray-dark bg-opacity-75">
+  <text class="text-white mr-2">登录享受更多专属服务</text>
+  <view  bindtap="toPage" data-target="login" class="rounded-full bg-gradient-to-l px-3 py-2 text-white from-red-buttonfrom to-red-buttonto">去登录</view>
+</view>
+<view class="h-screen w-screen flex justify-center items-center z-50 fixed top-0 left-0 right-0 bottom-0 bg-gray-dark bg-opacity-80" hidden="{{ !showFirst }}" >
+  <view class="relative w-screen flex flex-col justify-center items-center" >
+    <text class="absolute top-16 font-bold" style="font-size:88rpx;color:#E70316; left:50%;transform: translateX(-50%)">10元</text>
+    <image src="https://bestune-app-1300211780.cos.ap-beijing.myqcloud.com/cos-washcar/firstcard.png" style="width:500rpx;height:530rpx;" />
+    <view class="absolute bottom-4 " style="width:350rpx;height:120rpx;left:50%;transform: translateX(-50%)" bindtap="toPage" data-target="order"></view>
+    <image bindtap="closeFirst" class="absolute -bottom-12" src="../../static/close.png" style="width:60rpx;height:60rpx" />
+  </view>
+</view>
